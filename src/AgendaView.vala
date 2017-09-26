@@ -542,20 +542,19 @@ public class Maya.View.AgendaView : Gtk.Grid {
          * Updates the event to match the given event.
          */
         public void update (E.CalComponent event) {
-            unowned iCal.Component ical_event = event.get_icalcomponent ();
-            summary = ical_event.get_summary ();
+            summary = event.get_summary ().value;
             name_label.set_markup (Markup.escape_text (summary));
 
             DateTime start_date, end_date;
-            Util.get_local_datetimes_from_icalcomponent (ical_event, out start_date, out end_date);
-            
+            Util.get_datetimes_from_ecalcomponent (event, out start_date, out end_date);
+
             is_allday = Util.is_all_day (start_date, end_date);
             is_multiday = Util.is_multiday_event (event);
 
-            string start_date_string = start_date.format (Settings.DateFormat_Complete ());
-            string end_date_string = end_date.format (Settings.DateFormat_Complete ());
-            string start_time_string = start_date.format (Settings.TimeFormat ());
-            string end_time_string = end_date.format (Settings.TimeFormat ());
+            string start_date_string = start_date.to_local().format (Settings.DateFormat_Complete ());
+            string end_date_string = end_date.to_local().format (Settings.DateFormat_Complete ());
+            string start_time_string = start_date.to_local().format (Settings.TimeFormat ());
+            string end_time_string = end_date.to_local().format (Settings.TimeFormat ());
 
             datatime_label.show ();
             datatime_label.no_show_all = false;
@@ -582,7 +581,8 @@ public class Maya.View.AgendaView : Gtk.Grid {
                 }
             }
 
-            string location = ical_event.get_location ();
+            string location;
+            event.get_location (out location);
             if (location != null && location != "") {
                 location_label.label = location;
                 location_label.show ();
