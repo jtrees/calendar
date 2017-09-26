@@ -131,7 +131,7 @@ namespace MayaDaemon {
                     e_alarm.get_trigger (out trigger);
                     if (trigger.type == E.CalComponentAlarmTriggerType.RELATIVE_START) {
                         iCal.DurationType duration = trigger.rel_duration;
-                        var start_time = Maya.Util.ical_to_date_time (comp.get_dtstart ());
+                        var start_time = Maya.Util.ecal_to_date_time (event.get_dtstart ()).to_local ();
                         var now = new DateTime.now_local ();
                         if (now.compare (start_time) > 0) {
                             continue;
@@ -191,9 +191,8 @@ namespace MayaDaemon {
             }
         }
 
-        unowned iCal.Component comp = event.get_icalcomponent ();
-        var primary_text = "%s".printf (comp.get_summary ());
-        var start_time = Maya.Util.ical_to_date_time (comp.get_dtstart ());
+        var primary_text = "%s".printf (event.get_summary ().value);
+        var start_time = Maya.Util.ecal_to_date_time (event.get_dtstart ()).to_local ();
         var now = new DateTime.now_local ();
         string secondary_text = "";
         var h24_settings = new Settings ("org.gnome.desktop.interface");
