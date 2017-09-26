@@ -450,15 +450,16 @@ namespace Maya.Util {
         }
     }
 
-    public bool is_multiday_event (iCal.Component comp) {
-        var start = ical_to_date_time (comp.get_dtstart ());
-        var end = ical_to_date_time (comp.get_dtend ());
+    public bool is_multiday_event (E.CalComponent comp) {
+        var start = ecal_to_date_time (comp.get_dtstart ()).to_local ();
+        var end = ecal_to_date_time (comp.get_dtend ()).to_local ();
 
         if (is_all_day (start, end))
             end = end.add_days (-1);
 
-        if (start.get_year () != end.get_year () || start.get_day_of_year () != end.get_day_of_year ())
+        if (start.get_year () != end.get_year () || start.get_day_of_year () != end.get_day_of_year ()) {
             return true;
+        }
 
         return false;
     }

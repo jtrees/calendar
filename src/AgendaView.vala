@@ -551,7 +551,7 @@ public class Maya.View.AgendaView : Gtk.Grid {
             Util.get_local_datetimes_from_icalcomponent (ical_event, out start_date, out end_date);
             
             is_allday = Util.is_all_day (start_date, end_date);
-            is_multiday = Util.is_multiday_event (ical_event);
+            is_multiday = Util.is_multiday_event (event);
 
             string start_date_string = start_date.format (Settings.DateFormat_Complete ());
             string end_date_string = end_date.format (Settings.DateFormat_Complete ());
