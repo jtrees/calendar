@@ -16,8 +16,8 @@ namespace Maya.Util {
 
     public int compare_events (E.CalComponent comp1, E.CalComponent comp2) {
 
-        var date1 = Util.ical_to_date_time (comp1.get_icalcomponent ().get_dtstart ());
-        var date2 = Util.ical_to_date_time (comp2.get_icalcomponent ().get_dtstart ());
+        var date1 = Util.ecal_to_date_time (comp1.get_dtstart ());
+        var date2 = Util.ecal_to_date_time (comp2.get_dtstart ());
 
         if (date1.compare (date2) != 0)
             return date1.compare(date2);
