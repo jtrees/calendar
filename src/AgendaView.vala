@@ -92,12 +92,12 @@ public class Maya.View.AgendaView : Gtk.Grid {
                 if (row2.is_allday) {
                     return 1;
                 } else {
-                    unowned iCal.Component ical_event1 = row1.calevent.get_icalcomponent ();
+                    unowned E.CalComponent event1 = row1.calevent;
                     DateTime start_date1, end_date1;
-                    Util.get_local_datetimes_from_icalcomponent (ical_event1, out start_date1, out end_date1);
-                    unowned iCal.Component ical_event2 = row2.calevent.get_icalcomponent ();
+                    Util.get_datetimes_from_ecalcomponent (event1, out start_date1, out end_date1);
+                    unowned E.CalComponent event2 = row2.calevent;
                     DateTime start_date2, end_date2;
-                    Util.get_local_datetimes_from_icalcomponent (ical_event2, out start_date2, out end_date2);
+                    Util.get_datetimes_from_ecalcomponent (event2, out start_date2, out end_date2);
                     var comp = start_date1.compare (start_date2);
                     if (comp != 0) {
                         return comp;
@@ -158,12 +158,12 @@ public class Maya.View.AgendaView : Gtk.Grid {
             var row1 = (AgendaEventRow) child1;
             var row2 = (AgendaEventRow) child2;
 
-            unowned iCal.Component ical_event1 = row1.calevent.get_icalcomponent ();
+            unowned E.CalComponent event1 = row1.calevent;
             DateTime start_date1, end_date1;
-            Util.get_local_datetimes_from_icalcomponent (ical_event1, out start_date1, out end_date1);
-            unowned iCal.Component ical_event2 = row2.calevent.get_icalcomponent ();
+            Util.get_datetimes_from_ecalcomponent (event1, out start_date1, out end_date1);
+            unowned E.CalComponent event2 = row2.calevent;
             DateTime start_date2, end_date2;
-            Util.get_local_datetimes_from_icalcomponent (ical_event2, out start_date2, out end_date2);
+            Util.get_datetimes_from_ecalcomponent (event2, out start_date2, out end_date2);
             var comp = start_date1.compare (start_date2);
             if (comp != 0) {
                 return comp;
