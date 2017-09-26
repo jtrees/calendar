@@ -128,9 +128,15 @@ namespace Maya.Util {
         }
     }
 
-    public bool is_event_in_range (iCal.Component comp, Util.DateRange view_range) {
-        var start = ical_to_date_time (comp.get_dtstart ());
-        var end = ical_to_date_time (comp.get_dtend ());
+    /**
+     * Checks whether the provided event fully or partially takes place
+     * within the specified date range.
+     *
+     * Checks the local timezone of the of the specified event.
+     */
+    public bool is_event_in_range (E.CalComponent comp, Util.DateRange view_range) {
+        var start = ecal_to_date_time (comp.get_dtstart ()).to_local ();
+        var end = ecal_to_date_time (comp.get_dtend ()).to_local ();
 
         if (is_all_day (start, end)) {
             end = end.add_days (-1);

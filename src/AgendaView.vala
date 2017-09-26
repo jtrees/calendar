@@ -114,16 +114,15 @@ public class Maya.View.AgendaView : Gtk.Grid {
         });
 
         selected_date_events_list.set_filter_func ((row) => {
-            var event_row = (AgendaEventRow) row;
-            if (selected_date == null)
+            if (selected_date == null) {
                 return false;
-
-            unowned iCal.Component comp = event_row.calevent.get_icalcomponent ();
-            DateTime start_date, end_date;
-            Util.get_local_datetimes_from_icalcomponent (comp, out start_date, out end_date);
+            }
 
             var stripped_time = new DateTime.local (selected_date.get_year (), selected_date.get_month (), selected_date.get_day_of_month (), 0, 0, 0);
             var range = new Util.DateRange (stripped_time, stripped_time.add_days (1));
+
+            var event_row = (AgendaEventRow) row;
+            unowned E.CalComponent comp = event_row.calevent;
 
             return Util.is_event_in_range (comp, range);
         });
@@ -182,7 +181,7 @@ public class Maya.View.AgendaView : Gtk.Grid {
             var event_row = (AgendaEventRow) row;
             
             DateTime now = new DateTime.now_local ();
-            unowned iCal.Component comp = event_row.calevent.get_icalcomponent ();
+            unowned E.CalComponent comp = event_row.calevent;
             var stripped_time = new DateTime.local (now.get_year (), now.get_month (), now.get_day_of_month (), 0, 0, 0);
             stripped_time = stripped_time.add_days (1);
             var stripped_time_end = new DateTime.local (now.get_year (), now.get_month (), 1, 0, 0, 0);
@@ -238,7 +237,7 @@ public class Maya.View.AgendaView : Gtk.Grid {
     }
 
     private static int get_event_type (AgendaEventRow row) {
-        unowned iCal.Component comp = row.calevent.get_icalcomponent ();
+        unowned E.CalComponent comp = row.calevent;
         DateTime now = new DateTime.now_local ();
 
         var stripped_time = new DateTime.local (now.get_year (), now.get_month (), now.get_day_of_month (), 0, 0, 0);
