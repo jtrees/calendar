@@ -117,21 +117,6 @@ namespace Maya.Util {
     }
 
     /**
-     * DEPRECATED! Use get_datetimes_from_ecalcomponent instead.
-     */
-    public void get_local_datetimes_from_icalcomponent (iCal.Component comp, out DateTime start_date, out DateTime end_date) {
-        iCal.TimeType dt_start = comp.get_dtstart ();
-        iCal.TimeType dt_end = comp.get_dtend ();
-
-        start_date = Util.ical_to_date_time (dt_start);
-        end_date = Util.ical_to_date_time (dt_end);
-
-        if (is_all_day (start_date, end_date)) {
-            end_date = end_date.add_days (-1);
-        }
-    }
-
-    /**
      * Returns DateTime objects with timezone information.
      *
      * Typically you will want to call `to_local ()` on the returned objects.

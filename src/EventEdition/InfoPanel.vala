@@ -228,7 +228,7 @@ public class Maya.View.EventEdition.InfoPanel : Gtk.Grid {
             iCal.TimeType dt_end = comp.get_dtend ();
 
             DateTime from_date, to_date;
-            Util.get_local_datetimes_from_icalcomponent (comp, out from_date, out to_date);
+            Util.get_datetimes_from_ecalcomponent (parent_dialog.ecal, out from_date, out to_date);
 
             if (dt_start.year != 0) {
                 from_date_picker.date = from_date;
