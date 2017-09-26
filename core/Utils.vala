@@ -95,7 +95,19 @@ namespace Maya.Util {
         return new TimeZone (hour_string);
     }
 
+    public TimeZone timezone_from_ecal (E.CalComponentDateTime date) {
+        return new TimeZone (date.tzid);
+    }
+
+    public DateTime ecal_to_date_time (E.CalComponentDateTime date) {
+        var v = date.value;
+        return new DateTime (timezone_from_ecal (date), v.year, v.month,
+            v.day, v.hour, v.minute, v.second);
+    }
+
     /**
+     * DEPRECATED! Use ecal_to_date_time instead.
+     *
      * Converts the given TimeType to a DateTime.
      * XXX : Track next versions of evolution in order to convert iCal.Timezone to GLib.TimeZone with a dedicated function…
      */
