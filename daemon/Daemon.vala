@@ -117,8 +117,10 @@ namespace MayaDaemon {
     }
 
     void add_event (E.Source source, E.CalComponent event) {
-        unowned iCal.Component comp = event.get_icalcomponent ();
-        debug ("Event [%s, %s, %s]".printf (comp.get_summary(), source.dup_display_name(), comp.get_uid()));
+        string uid;
+        event.get_uid (out uid);
+        debug ("Event [%s, %s, %s]".printf (event.get_summary().value, source.dup_display_name(), uid));
+
         foreach (var alarm_uid in event.get_alarm_uids ()) {
             E.CalComponentAlarm e_alarm = event.get_alarm (alarm_uid);
             E.CalComponentAlarmAction action;
